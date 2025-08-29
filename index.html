@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TopUpX — Top Up Game Cepat & Aman</title>
+  <meta name="description" content="TopUpX — tempat top up game favorit kamu. Proses kilat, UI cakep, dan efek interaktif." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="bgParticles" aria-hidden="true"></canvas>
+
+  <header class="nav">
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <span>TopUpX</span>
+    </div>
+    <nav class="links">
+      <a href="#games">Games</a>
+      <a href="#why">Keunggulan</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="actions">
+      <button id="modeToggle" class="btn ghost" aria-label="Toggle Dark Mode">🌙</button>
+      <a class="btn primary" href="#games">Top Up Sekarang</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <h1><span class="gradient">Top up game</span> jadi <span class="shine">super cepet</span>.</h1>
+      <p>UI cakep, efek interaktif, dan flow simpel. Tinggal pilih game, masukin ID, pilih nominal, beres 💨</p>
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Cari game… (cth: Mobile Legends, Free Fire, Roblox)" />
+      </div>
+      <div class="brandmarquee" aria-hidden="true">
+        <span>MLBB • Free Fire • Genshin • Roblox • Valorant • PUBG • HSR • CODM</span>
+        <span>MLBB • Free Fire • Genshin • Roblox • Valorant • PUBG • HSR • CODM</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="blob"></div>
+      <div class="card preview tilt">
+        <img src="assets/img/game-placeholder.jpg" alt="Preview Game" />
+        <div class="card-info">
+          <h3>Mobile Legends</h3>
+          <p>Diamond termurah ✨</p>
+        </div>
+      </div>
+      <div class="glow"></div>
+    </div>
+  </section>
+
+  <section id="games" class="section">
+    <div class="section-head">
+      <h2>Pilih Game</h2>
+      <div class="chips" id="categoryChips">
+        <button class="chip active" data-cat="all">Semua</button>
+        <button class="chip" data-cat="popular">Populer</button>
+        <button class="chip" data-cat="new">Baru</button>
+        <button class="chip" data-cat="voucher">Voucher</button>
+      </div>
+    </div>
+
+    <div id="gamesGrid" class="grid"></div>
+  </section>
+
+  <section id="why" class="section compact">
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>Proses Kilat</h3>
+        <p>Biasanya masuk dalam hitungan detik—no ribet, no nunggu lama.</p>
+      </div>
+      <div class="why-card">
+        <h3>Harga Masuk Akal</h3>
+        <p>Transparan tanpa biaya tersembunyi. Dompet aman, hati senang.</p>
+      </div>
+      <div class="why-card">
+        <h3>UI Bikin Betah</h3>
+        <p>Glassmorphism + glow + micro‑interaction biar pengalaman makin cozy.</p>
+      </div>
+      <div class="why-card">
+        <h3>Support Ramah</h3>
+        <p>Butuh bantuan? Chat aja—kita bantu sampai berhasil.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section compact">
+    <h2>FAQ</h2>
+    <details open>
+      <summary>Top up berapa lama masuk?</summary>
+      <p>Kebanyakan instan. Kadang 1–5 menit tergantung antrian & server game.</p>
+    </details>
+    <details>
+      <summary>Metode pembayaran apa aja?</summary>
+      <p>QRIS, Dana, OVO, GoPay, ShopeePay, VA Bank, dan e‑Wallet lain.</p>
+    </details>
+    <details>
+      <summary>Kalau ID salah gimana?</summary>
+      <p>Tenang, ada konfirmasi nickname sebelum bayar biar minim typo.</p>
+    </details>
+  </section>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> TopUpX — dibikin dengan ❤️.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card tilt" id="modalCard">
+      <button class="close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-media">
+        <img id="modalImg" src="assets/img/game-placeholder.jpg" alt="Game" />
+      </div>
+      <div class="modal-body">
+        <h3 id="modalTitle">Top Up</h3>
+        <p id="modalSub">Masukin data player kamu dulu ya.</p>
+
+        <form id="orderForm">
+          <label>Player ID
+            <input required name="playerId" type="text" placeholder="Contoh: 123456789" />
+          </label>
+          <label>Server/Region (opsional)
+            <input name="server" type="text" placeholder="Contoh: 2001 / Asia" />
+          </label>
+
+          <div class="divider"></div>
+          <h4>Pilih Nominal</h4>
+          <div class="denoms" id="denoms"></div>
+
+          <div class="divider"></div>
+          <h4>Metode Pembayaran</h4>
+          <div class="payments" id="payments"></div>
+
+          <div class="total">
+            <span>Total</span>
+            <strong id="totalPrice">Rp0</strong>
+          </div>
+
+          <button class="btn primary large" type="submit">Bayar Sekarang</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden">Berhasil bikin pesanan 🎉</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
